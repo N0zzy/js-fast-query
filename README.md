@@ -22,11 +22,11 @@ ___
 ___
 >.text() - only write
 
-    $$.query("div").text();
+    $$.query("div").text('test');
 ___
 >.html() - only write
 
-    $$.query("div").html();
+    $$.query("div").html('<div>test</div>');
 ___
 >.extends() + .module.fn
 
