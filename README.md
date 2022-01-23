@@ -13,7 +13,7 @@ jFquery - alternative jquery library for faster work with DOM-elements
         o.css({
             width: "100px"
         });      
-    );
+    });
 
 > .css()
 
