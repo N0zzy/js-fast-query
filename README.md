@@ -2,11 +2,10 @@
 jFquery - alternative jquery library for faster work with DOM-elements
 
 ## example
-
 >.elem - js object-element (vanilla)
 
     $$.query("div").elem.innerHTML = "test";
-
+___
 >.ready() + .css()
 
     $$.query("div").ready((o, e)=>{
@@ -14,21 +13,21 @@ jFquery - alternative jquery library for faster work with DOM-elements
             width: "100px"
         });      
     });
-
+___
 > .css()
 
     $$.query("div").css({
         width: "100px" 
     });
-
+___
 >.text() - only write
 
     $$.query("div").text();
-
+___
 >.html() - only write
 
     $$.query("div").html();
-
+___
 >.extends() + .module.fn
 
     $$.extends("test", ()=> {
@@ -36,4 +35,4 @@ jFquery - alternative jquery library for faster work with DOM-elements
     });
 
     $$.query("div").module.test();
-    
+ ___   
