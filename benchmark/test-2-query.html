@@ -66,7 +66,7 @@
 
     t = microtime(true);
     for(let i=0; i<1000000; i++){
-        $$.query("#test").css({width: "100px"});
+        $$.query("#test").css({width: "200px"});
     }
     console.dir("jFquery: " + (microtime(true) - t));
 
