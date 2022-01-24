@@ -40,7 +40,7 @@ const $$ = new function () {
     this.prepend = (content)=> {
         this.elem.forEach((o)=>{
             switch(typeof content){
-                case "string": o.innerHTML = content + this.elem.innerHTML; break;
+                case "string": o.innerHTML = content + o.innerHTML; break;
                 case "object": o.prepend(content); break;
             }
         });
@@ -86,6 +86,34 @@ const $$ = new function () {
         this.elem.forEach((o)=>{
             o.innerText = content;
             !!append ? o.innerHTML += content : o.innerHTML = content;
+        });
+    };
+
+    this.exec = (params = {})=> {
+        if(typeof params != 'object') return;
+        this.elem.forEach((o)=>{
+            for (let k in params) {
+                switch (k.toLowerCase()) {
+                    case 'css': for(let s in params[k]){
+                        o.style[s] = styles[s];
+                    } break;
+                    case 'append': switch(typeof params[k]){
+                        case "string": o.innerHTML += content; break;
+                        case "object": o.appendChild(content); break;
+                    } break;
+                    case 'prepend': switch(typeof params[k]){
+                        case "string": o.innerHTML = content + o.innerHTML; break;
+                        case "object": o.prepend(content); break;
+                    } break;
+                    case 'click': o.onclick = params[k]; break;
+                    case 'text': o.innerText = params[k]; break;
+                    case 'html': o.innerHTML = params[k]; break;
+                    case 'attr': o.setAttribute(params[k].name, params[k].value); break;
+                    case 'addclass': o.classList.add(params[k]); break;
+                    case 'removeclass': o.classList.remove(params[k]); break;
+                    case 'remove': params[k] ? o.remove() : null; break;
+                }
+            }
         });
     };
 
