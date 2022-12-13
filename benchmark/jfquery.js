@@ -69,12 +69,19 @@ const $$ = new function () {
                 o.onclick = click;
             });
         };
-        this.text = (content)=> {
+        this.text = (content = null)=> {
+            if(content === null) {
+                return this.elem[0].innerText;
+            }
             this.elem.forEach((o)=>{
                 o.innerText = content;
             });
         };
-        this.html = (content, append = false)=> {
+        this.html = (content = null, append = false)=> {
+            if(content === null) {
+                return this.elem[0].innerHTML;
+            }
+
             this.elem.forEach((o)=>{
                 o.innerText = content;
                 !!append ? o.innerHTML += content : o.innerHTML = content;
@@ -133,13 +140,12 @@ const $$ = new function () {
         }
         return cache.get(selector);
     };
+    this.clearCache = (selector = null)=> {
+        if(selector === null) {
+            cache.clear();
+        }
+        else {
 
-
-    this.module = {};
-
-    this.extends = (name, fn)=> {
-        this.module[name] = ()=> {
-            fn($$.elem);
-        };
+        }
     };
 };

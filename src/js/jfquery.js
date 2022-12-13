@@ -3,8 +3,9 @@ const $$ = new function () {
     const cache = new Map();
     this.elem = [];
 
-    const jFquery = function(e) {
+    const jFquery = function(e, s) {
         this.elem = e;
+        this.selector = s;
         this.ready = (fn)=> {
             if(this.elem[0] !== null && this.elem[0] !== undefined) {
                 fn(this, this.elem);
@@ -69,12 +70,19 @@ const $$ = new function () {
                 o.onclick = click;
             });
         };
-        this.text = (content)=> {
+        this.text = (content = null)=> {
+            if(content === null) {
+                return this.elem[0].innerText;
+            }
             this.elem.forEach((o)=>{
                 o.innerText = content;
             });
         };
-        this.html = (content, append = false)=> {
+        this.html = (content = null, append = false)=> {
+            if(content === null) {
+                return this.elem[0].innerHTML;
+            }
+
             this.elem.forEach((o)=>{
                 o.innerText = content;
                 !!append ? o.innerHTML += content : o.innerHTML = content;
@@ -85,6 +93,14 @@ const $$ = new function () {
         };
         this.height = (fixed = 2)=> {
             return this.elem[0].getBoundingClientRect().height.toFixed(fixed);
+        };
+        this.animate = (props = {}) => {
+            if(!window.anime){
+                console.warn('library `https://animejs.com` not found...');
+                return;
+            }
+            props.targets = this.selector;
+            window.anime(props);
         };
         this.exec = (params = {})=> {
             if(typeof params != 'object') return;
@@ -122,24 +138,23 @@ const $$ = new function () {
                 ? document.querySelector(selector)
                 : selector
             );
-            cache.set(selector, new jFquery(this.elem));
+            cache.set(selector, new jFquery(this.elem, selector));
         }
         return cache.get(selector);
     };
     this.queryAll = (selector)=> {
         if(!cache.has(selector)){
             this.elem = document.querySelectorAll(selector);
-            cache.set(selector, new jFquery(this.elem));
+            cache.set(selector, new jFquery(this.elem, selector));
         }
         return cache.get(selector);
     };
+    this.clearCache = (selector = null)=> {
+        if(selector === null) {
+            cache.clear();
+        }
+        else {
 
-
-    this.module = {};
-
-    this.extends = (name, fn)=> {
-        this.module[name] = ()=> {
-            fn($$.elem);
-        };
+        }
     };
 };
