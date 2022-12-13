@@ -15,15 +15,20 @@
     jquery:  $("#test");
     <b style="color:orange">jFquery</b>: $$.query("#test");
 
+<h3>iteration: 5000</h3>
+    Vanilla: <span id="t1-a"></span>
+    jquery:  <span id="t1-b"></span>
+    <b style="color:orange">jFquery</b>: <span id="t1-c"></span>
+
 <h3>iteration: 10000</h3>
-    Vanilla: <span id="a"></span>
-    jquery:  <span id="b"></span>
-    <b style="color:orange">jFquery</b>: <span id="c"></span>
+    Vanilla: <span id="t1-d"></span>
+    jquery:  <span id="t1-e"></span>
+    <b style="color:orange">jFquery</b>: <span id="t1-f"></span>
 
 <h3>iteration: 1000000</h3>
-    Vanilla: <span id="d"></span>
-    jquery:  <span id="e"></span>
-    <b style="color:orange">jFquery</b>: <span id="f"></span>
+    Vanilla: <span id="t1-g"></span>
+    jquery:  <span id="t1-h"></span>
+    <b style="color:orange">jFquery</b>: <span id="t1-i"></span>
 
 </pre>
 
@@ -31,25 +36,45 @@
 
 <script>
     let t;
+	
+	    t = microtime(true);
+    for(let i=0; i<5000; i++){
+        document.getElementById("test");
+    }
+    document.getElementById("t1-a").innerText = (microtime(true) - t);
+
+    t = microtime(true);
+    for(let i=0; i<5000; i++){
+        $("#test");
+    }
+    $("#t1-b").text((microtime(true) - t));
+
+    t = microtime(true);
+    for(let i=0; i<5000; i++){
+        $$.query("#test");
+    }
+    $$.query("#t1-c").text((microtime(true) - t));
+	
+	
+	
 
     t = microtime(true);
     for(let i=0; i<10000; i++){
         document.getElementById("test");
     }
-    document.getElementById("a").innerText = (microtime(true) - t);
+    document.getElementById("t1-d").innerText = (microtime(true) - t);
 
     t = microtime(true);
     for(let i=0; i<10000; i++){
         $("#test");
     }
-    $("#b").text((microtime(true) - t));
+    $("#t1-e").text((microtime(true) - t));
 
     t = microtime(true);
     for(let i=0; i<10000; i++){
         $$.query("#test");
     }
-    $$.query("#c").text((microtime(true) - t));
-
+    $$.query("#t1-f").text((microtime(true) - t));
 
 
 
@@ -59,19 +84,19 @@
     for(let i=0; i<1000000; i++){
         document.getElementById("test");
     }
-    document.getElementById("d").innerText = (microtime(true) - t);
+    document.getElementById("t1-g").innerText = (microtime(true) - t);
 
     t = microtime(true);
     for(let i=0; i<1000000; i++){
         $("#test");
     }
-    $("#e").text((microtime(true) - t));
+    $("#t1-h").text((microtime(true) - t));
 
     t = microtime(true);
     for(let i=0; i<1000000; i++){
         $$.query("#test");
     }
-    $$.query("#f").text((microtime(true) - t));
+    $$.query("#t1-i").text((microtime(true) - t));
 
 </script>
 </body>
