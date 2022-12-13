@@ -1,5 +1,5 @@
 # js-fast-query
-jFquery - alternative jquery library for faster work with DOM-elements
+jFquery - alternative jquery library that is several times faster than it due to additional object caching for working with DOM elements.
 
 ## example
 >.elem - js object-element (vanilla)
@@ -28,11 +28,3 @@ ___
 
     $$.query("div").html('<div>test</div>');
 ___
->.extends() + .module.fn
-
-    $$.extends("test", ()=> {
-        console.dir("test");
-    });
-
-    $$.query("div").module.test();
- ___   
