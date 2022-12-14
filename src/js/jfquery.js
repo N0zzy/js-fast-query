@@ -1,11 +1,27 @@
 const $$ = new function () {
     'use strict';
-    const cache = new Map();
+    let cache = new Map();
     this.elem = [];
-
     const jFquery = function(e, s) {
         this.elem = e;
         this.selector = s;
+        this.events = [];
+
+        let extendEvents = ()=> {
+            this.elem.forEach((e, i)=>{
+                if(typeof this.events[i] != 'object') {
+                    this.events[i] = {};
+                }
+                for (let key in e) {
+                    if(key.startsWith('on', 0)) {
+                        if(e[key] !== null)  this.events[i].push(key);
+                    }
+                }
+            });
+        };
+
+        extendEvents();
+
         this.ready = (fn)=> {
             if(this.elem[0] !== null && this.elem[0] !== undefined) {
                 fn(this, this.elem);
@@ -66,9 +82,29 @@ const $$ = new function () {
             return this;
         };
         this.click = (click)=> {
-            this.elem.forEach((o)=>{
+            this.elem.forEach((o, i)=>{
                 o.onclick = click;
+                this.events[i]['onclick'] = 'enable';
             });
+            return this;
+        };
+        this.hover = (over, out)=> {
+            this.elem.forEach((o,i)=>{
+                o.onmouseover = over;
+                o.onmouseout = out;
+                this.events[i]['onmouseover'] = 'enable';
+                this.events[i]['onmouseout'] = 'enable';
+            });
+            return this;
+        };
+        this.off = ()=> {
+            this.elem.forEach((o, i)=>{
+                for(let n in this.events[i]){
+                    o[n] = null;
+                    delete this.events[i][n];
+                }
+            });
+            return this;
         };
         this.text = (content = null)=> {
             if(content === null) {
@@ -138,6 +174,7 @@ const $$ = new function () {
                 ? document.querySelector(selector)
                 : selector
             );
+
             cache.set(selector, new jFquery(this.elem, selector));
         }
         return cache.get(selector);
