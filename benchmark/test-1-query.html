@@ -3,101 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="microtime.js"></script>
-    <script src="jfquery.js"></script>
+    <link rel="stylesheet" href="css/jfq.css">
 </head>
 <body>
-
-<pre>
-
-    Vanilla: document.getElementById("test");
-    jquery:  $("#test");
-    <b style="color:orange">jFquery</b>: $$.query("#test");
-
-<h3>iteration: 5000</h3>
-    Vanilla: <span id="t1-a"></span>
-    jquery:  <span id="t1-b"></span>
-    <b style="color:orange">jFquery</b>: <span id="t1-c"></span>
-
-<h3>iteration: 10000</h3>
-    Vanilla: <span id="t1-d"></span>
-    jquery:  <span id="t1-e"></span>
-    <b style="color:orange">jFquery</b>: <span id="t1-f"></span>
-
-<h3>iteration: 1000000</h3>
-    Vanilla: <span id="t1-g"></span>
-    jquery:  <span id="t1-h"></span>
-    <b style="color:orange">jFquery</b>: <span id="t1-i"></span>
-
-</pre>
-
-<div id="test" style="color: transparent;"></div>
-
-<script>
-    let t;
-	
-	    t = microtime(true);
-    for(let i=0; i<5000; i++){
-        document.getElementById("test");
-    }
-    document.getElementById("t1-a").innerText = (microtime(true) - t);
-
-    t = microtime(true);
-    for(let i=0; i<5000; i++){
-        $("#test");
-    }
-    $("#t1-b").text((microtime(true) - t));
-
-    t = microtime(true);
-    for(let i=0; i<5000; i++){
-        $$.query("#test");
-    }
-    $$.query("#t1-c").text((microtime(true) - t));
-	
-	
-	
-
-    t = microtime(true);
-    for(let i=0; i<10000; i++){
-        document.getElementById("test");
-    }
-    document.getElementById("t1-d").innerText = (microtime(true) - t);
-
-    t = microtime(true);
-    for(let i=0; i<10000; i++){
-        $("#test");
-    }
-    $("#t1-e").text((microtime(true) - t));
-
-    t = microtime(true);
-    for(let i=0; i<10000; i++){
-        $$.query("#test");
-    }
-    $$.query("#t1-f").text((microtime(true) - t));
-
-
-
-
-
-    t = microtime(true);
-    for(let i=0; i<1000000; i++){
-        document.getElementById("test");
-    }
-    document.getElementById("t1-g").innerText = (microtime(true) - t);
-
-    t = microtime(true);
-    for(let i=0; i<1000000; i++){
-        $("#test");
-    }
-    $("#t1-h").text((microtime(true) - t));
-
-    t = microtime(true);
-    for(let i=0; i<1000000; i++){
-        $$.query("#test");
-    }
-    $$.query("#t1-i").text((microtime(true) - t));
-
-</script>
+<iframe src="test-1/test-a-query.html" frameborder="0"></iframe>
+<iframe src="test-1/test-b-query.html" frameborder="0"></iframe>
+<iframe src="test-1/test-c-query.html" frameborder="0"></iframe>
 </body>
 </html>

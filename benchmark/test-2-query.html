@@ -3,73 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="microtime.js"></script>
-    <script src="jfquery.js"></script>
+    <link rel="stylesheet" href="css/jfq.css">
 </head>
 <body>
-
-<pre>
-
-    Vanilla: document.getElementById("test").style.width = "100px";
-    jquery:  $("#test").css({width: "100px"});
-    <b style="color:orange">jFquery</b>: $$.query("#test").css({width: "100px"});
-
-<h3>iteration: 10000</h3>
-    Vanilla: 0.0070002079010009766
-    jquery:  0.06000018119812012
-    <b style="color:orange">jFquery</b>: 0.008999824523925781
-
-<h3>iteration: 1000000</h3>
-    Vanilla: 0.5199999809265137
-    jquery:  4.258000135421753
-    <b style="color:orange">jFquery</b>: 0.5809998512268066
-
-</pre>
-
-<div id="test"></div>
-
-<script>
-    let t;
-
-    t = microtime(true);
-    for(let i=0; i<10000; i++){
-        document.getElementById("test").style.width = "100px";
-    }
-    console.dir("Vanilla: " + (microtime(true) - t));
-
-    t = microtime(true);
-    for(let i=0; i<10000; i++){
-        $("#test").css({width: "100px"});
-    }
-    console.dir("jquery: " + (microtime(true) - t));
-
-    t = microtime(true);
-    for(let i=0; i<10000; i++){
-        $$.query("#test").css({width: "100px"});
-    }
-    console.dir("jFquery: " + (microtime(true) - t));
-
-    console.dir("----------------------------------");
-
-    t = microtime(true);
-    for(let i=0; i<1000000; i++){
-        document.getElementById("test").style.width = "100px";
-    }
-    console.dir("Vanilla: " + (microtime(true) - t));
-
-    t = microtime(true);
-    for(let i=0; i<1000000; i++){
-        $("#test").css({width: "100px"});
-    }
-    console.dir("jquery: " + (microtime(true) - t));
-
-    t = microtime(true);
-    for(let i=0; i<1000000; i++){
-        $$.query("#test").css({width: "200px"});
-    }
-    console.dir("jFquery: " + (microtime(true) - t));
-
-</script>
+<iframe src="test-2/test-a-query.html" frameborder="0"></iframe>
+<iframe src="test-2/test-b-query.html" frameborder="0"></iframe>
+<iframe src="test-2/test-c-query.html" frameborder="0"></iframe>
 </body>
 </html>

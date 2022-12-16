@@ -3,79 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="microtime.js"></script>
-    <script src="jfquery.js"></script>
+    <link rel="stylesheet" href="css/jfq.css">
 </head>
 <body>
-
-<pre>
-    jquery:  $("#test").off();
-    <b style="color:orange">jFquery</b>: $$.query("#test").off();
-
-<h3>iteration: 1000</h3>
-    jquery:  <span id="t4-a"></span>
-    <b style="color:orange">jFquery</b>: <span id="t4-b"></span>
-
-<h3>iteration: 10000</h3>
-    jquery:  <span id="t4-c"></span>
-    <b style="color:orange">jFquery</b>: <span id="t4-d"></span>
-
-<h3>iteration: 1000000</h3>
-    jquery:  <span id="t4-e"></span>
-    <b style="color:orange">jFquery</b>: <span id="t4-f"></span>
-
-</pre>
-
-<div id="test1"></div>
-<div id="test2"></div>
-
-<script>
-    let t;
-
-    t = microtime(true);
-    let a = $("#test1").click(()=>{}).hover(()=>{});
-    for(let i=0; i<10; i++){
-        a.off();
-    }
-    document.getElementById("t4-a").innerText = (microtime(true) - t);
-
-    t = microtime(true);
-    let b = $$.query("#test2").click(()=>{}).hover(()=>{});
-    for(let i=0; i<10; i++){
-        b.off();
-    }
-    document.getElementById("t4-b").innerText = (microtime(true) - t);
-
-
-    t = microtime(true);
-    let c = $("#test1").click(()=>{}).hover(()=>{});
-    for(let i=0; i<10000; i++){
-        c.off();
-    }
-    document.getElementById("t4-c").innerText = (microtime(true) - t);
-
-    t = microtime(true);
-    let d = $$.query("#test2").click(()=>{}).hover(()=>{});
-    for(let i=0; i<10000; i++){
-        d.off();
-    }
-    document.getElementById("t4-d").innerText = (microtime(true) - t);
-
-    t = microtime(true);
-    let e = $("#test1").click(()=>{}).hover(()=>{});
-    for(let i=0; i<1000000; i++){
-        e.off();
-    }
-    document.getElementById("t4-e").innerText = (microtime(true) - t);
-
-    t = microtime(true);
-    let f = $$.query("#test2").click(()=>{}).hover(()=>{});
-    for(let i=0; i<1000000; i++){
-        f.off();
-    }
-    document.getElementById("t4-f").innerText = (microtime(true) - t);
-
-</script>
+<iframe src="test-4/test-a-query.html" frameborder="0"></iframe>
+<iframe src="test-4/test-b-query.html" frameborder="0"></iframe>
+<iframe src="test-4/test-c-query.html" frameborder="0"></iframe>
 </body>
 </html>

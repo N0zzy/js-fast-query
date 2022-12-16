@@ -1,20 +1,17 @@
 const $$ = new function () {
     'use strict';
     let cache = new Map();
-    this.elem = [];
+
     const jFquery = function(e, s) {
         this.elem = e;
         this.selector = s;
-        this.events = [];
+        this.events = {};
 
         let extendEvents = ()=> {
             this.elem.forEach((e, i)=>{
-                if(typeof this.events[i] != 'object') {
-                    this.events[i] = {};
-                }
                 for (let key in e) {
                     if(key.startsWith('on', 0)) {
-                        if(e[key] !== null)  this.events[i].push(key);
+                        if(e[key] !== null)  this.events[key] = 'enable';
                     }
                 }
             });
@@ -37,29 +34,57 @@ const $$ = new function () {
             });
             return this;
         };
-        this.append = (content)=> {
-            this.elem.forEach((o)=>{
-                switch(typeof content){
-                    case "string": o.innerHTML += content; break;
-                    case "object": o.appendChild(content); break;
+        this.appendData = (o, content)=> {
+            if(typeof content === 'string')  {
+                o.insertAdjacentHTML('beforeend', content);
+            }
+            else {
+                if(content instanceof jFquery){
+                    o.insertAdjacentElement('beforeend', content.elem[0]);
                 }
-            });
+                else {
+                    o.insertAdjacentElement('beforeend', content);
+                }
+            }
+        };
+
+        this.append = (content)=> {
+            if(this.elem.length > 1) {
+                this.elem.forEach((o)=>{
+                    this.appendData(o, content);
+                });
+            }
+            else {
+                this.appendData(this.elem[0], content);
+            }
             return this;
         };
         this.prepend = (content)=> {
             this.elem.forEach((o)=>{
-                switch(typeof content){
-                    case "string": o.innerHTML = content + o.innerHTML; break;
-                    case "object": o.prepend(content); break;
+                if(typeof content === 'string')  o.insertAdjacentHTML('afterbegin', content);
+                else {
+                    if(content instanceof jFquery){
+                        o.insertAdjacentElement('afterbegin', content.elem[0]);
+                    }
+                    else {
+                        o.insertAdjacentElement('afterbegin', content);
+                    }
                 }
             });
             return this;
         };
-        this.remove = ()=> {
-            this.elem.forEach((o)=>{
-                o.remove();
-            });
+        this.remove = (all = false)=> {
+            if(all) {
+                this.elem.forEach((o, i)=>{
+                    o.innerHTML = "";
+                });
+            }
+            else {
+                this.elem[0].innerHTML = "";
+            }
+            $$.clearCache(this.selector);
         };
+
         this.clear = ()=> {
             this.elem = [];
         };
@@ -81,10 +106,32 @@ const $$ = new function () {
             });
             return this;
         };
+        this.resize = (fn)=> {
+            this.elem.forEach((o, i)=>{
+                o.onresize = fn;
+            });
+            return this;
+        };
+        this.contextmenu = (click)=> {
+            this.elem.forEach((o, i)=>{
+                o.oncontextmenu = click;
+                this.events[i]['oncontextmenu'] = 'enable';
+            });
+            return this;
+        };
+        this.dblclick = (click)=> {
+            this.elem.forEach((o, i)=>{
+                o.ondblclick = click;
+                this.events[i]['ondblclick'] = 'enable';
+            });
+            return this;
+        };
         this.click = (click)=> {
             this.elem.forEach((o, i)=>{
-                o.onclick = click;
-                this.events[i]['onclick'] = 'enable';
+                o.onclick = (e)=> {
+                    click(e);
+                };
+                this.events['onclick'] = click;
             });
             return this;
         };
@@ -97,11 +144,18 @@ const $$ = new function () {
             });
             return this;
         };
+        this.on = (type, fn)=> {
+            this.elem.forEach((o,i)=>{
+                o['on' + type] = fn;
+                this.events[i]['on' + type] = 'enable';
+            });
+            return this;
+        };
         this.off = ()=> {
             this.elem.forEach((o, i)=>{
                 for(let n in this.events[i]){
                     o[n] = null;
-                    delete this.events[i][n];
+                    delete this.events[n];
                 }
             });
             return this;
@@ -113,6 +167,7 @@ const $$ = new function () {
             this.elem.forEach((o)=>{
                 o.innerText = content;
             });
+            return this.elem[0];
         };
         this.html = (content = null, append = false)=> {
             if(content === null) {
@@ -169,20 +224,33 @@ const $$ = new function () {
 
     this.query = (selector)=> {
         if(!cache.has(selector)){
-            this.elem = [];
-            this.elem.push("string" == typeof selector
-                ? document.querySelector(selector)
-                : selector
-            );
-
-            cache.set(selector, new jFquery(this.elem, selector));
+            let elem = [];
+            elem.push( document.querySelector(selector) );
+            cache.set(selector, new jFquery(elem, selector));
         }
         return cache.get(selector);
     };
-    this.queryAll = (selector)=> {
+    this.queryAll = (selector, )=> {
         if(!cache.has(selector)){
-            this.elem = document.querySelectorAll(selector);
-            cache.set(selector, new jFquery(this.elem, selector));
+            let elem = document.querySelectorAll(selector);
+            cache.set(selector, new jFquery(elem, selector));
+        }
+        return cache.get(selector);
+    };
+    this.make = (tag, selector = '')=> {
+        if(!cache.has(selector)){
+            let elem = [];
+            let e = document.createElement(tag);
+            let id = selector.match(/#(?<id>[^#\s]+)/);
+            e.id = id === null ? null: id.groups.id;
+            let gCls = selector.match(/(?<classes>\.[^#]+)/);
+            gCls = gCls === null ? "" : gCls.groups.classes;
+            gCls.slice(1).split('.').forEach((v)=>{
+                if(v.length < 1) return;
+                e.classList.add(v);
+            });
+            elem.push( e );
+            cache.set(selector, new jFquery(elem, selector));
         }
         return cache.get(selector);
     };
@@ -191,7 +259,10 @@ const $$ = new function () {
             cache.clear();
         }
         else {
-
+            cache.delete(selector);
         }
+    };
+    this.getCache = ()=> {
+        return cache;
     };
 };
