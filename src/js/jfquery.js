@@ -265,4 +265,10 @@ const $$ = new function () {
     this.getCache = ()=> {
         return cache;
     };
+    this.ajax = (props)=> {
+        if(typeof $ === 'function'){
+            return $.ajax(props);
+        }
+        return null;
+    };
 };
